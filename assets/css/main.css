@@ -1,0 +1,29 @@
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+img:not([draggable="true"]) {
+    pointer-events: none;
+}
+body {
+    background-color: #F0F8FF;
+}
+h2 {
+    text-align: center;
+    margin: 2rem;
+}
+.lista-utiles {
+    background-color: #ffffffe0;
+}
+.nard {
+    font-weight: 900;
+    text-decoration: none;
+}
