@@ -20,18 +20,30 @@ require 'config.php';
     <div class="progress" style="height: 10px; border-radius: 0; background-color: #302878;">
         <div class="progress-bar" style="background: linear-gradient(#990000, 20%, #ff8181, 85%, #990000);" id="progress-bar" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div class="container main">
-        <div class="text-center">
-            <img class="mt-4" src="assets/images/logo.svg" alt="<?php echo SITENAME; ?>" width="350px">
-        </div>
-
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                Menú
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <li><a class="dropdown-item" href="<?php echo URL; ?>">Principal</a></li>
-                <li><a class="dropdown-item" href="<?php echo URL; ?>registro_utiles.php">Lista de utiles</a></li>
-                <li><a class="dropdown-item" type="button">Something else here</a></li>
-            </ul>
-        </div>
+    <div class="container main mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light navega mb-4">
+            <div class="container">
+                <a class="navbar-brand mx-auto" href="<?php echo URL; ?>">
+                    <img src="assets/images/logo.svg" alt="<?php echo SITENAME; ?>" width="210px">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>">Principal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>estudiantes.php">Estudiantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>registro_utiles.php">Lista de útiles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo URL; ?>registro_grados.php">Listado de Grados</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>

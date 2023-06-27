@@ -1,9 +1,52 @@
 <?php
 require_once('inc/header.php');
+
 // Obtener la lista de grados
 $sqlGrados = "SELECT ID, Grado FROM Grados";
 $resultGrados = $conn->query($sqlGrados);
+?>
 
+<div class="container">
+    <h2>Registro de Recepción de Materiales:</h2>
+    <form action="index.php" method="POST">
+        <div class="mb-3">
+            <label for="nombre_estudiante" class="form-label">Nombre del Estudiante:</label>
+            <input type="text" name="nombre_estudiante" id="nombre_estudiante" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="grado" class="form-label">Grado:</label>
+            <select name="grado" id="grado" class="form-select" onchange="fetchUtiles(this.value)">
+                <option value="">Selecciona un grado</option>
+                <?php
+                while ($rowGrado = $resultGrados->fetch_assoc()) {
+                    echo "<option value='" . $rowGrado['ID'] . "'>" . $rowGrado['Grado'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+        <div id="utilesContainer"></div>
+        <input type="submit" value="Registrar Recepción" class="btn btn-primary">
+    </form>
+</div>
+
+<script>
+    function fetchUtiles(gradoID) {
+        const utilesContainer = document.getElementById('utilesContainer');
+
+        if (gradoID !== '') {
+            // Obtener los útiles para el grado seleccionado
+            fetch(`fetch_utiles.php?gradoID=${gradoID}`)
+                .then(response => response.text())
+                .then(data => {
+                    utilesContainer.innerHTML = data;
+                });
+        } else {
+            utilesContainer.innerHTML = '';
+        }
+    }
+</script>
+
+<?php
 // Procesar el formulario de recepción
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreEstudiante = $_POST['nombre_estudiante'];
@@ -22,61 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conn->query($sqlInsertUtil);
         }
 
-        echo "Recepción de materiales registrada con éxito.";
+        echo '<div class="alert alert-success" role="alert">Recepción de materiales registrada con éxito.</div>';
     } else {
-        echo "Error al registrar la recepción de materiales: " . $conn->error;
+        echo '<div class="alert alert-danger" role="alert">Error al registrar la recepción de materiales: ' . $conn->error . '</div>';
     }
 }
 ?>
 
-<h1>Recepción de Materiales Escolares</h1>
-
-<h2>Listado de Útiles por Grado:</h2>
-<?php
-while ($rowGrado = $resultGrados->fetch_assoc()) {
-    $gradoID = $rowGrado['ID'];
-    $grado = $rowGrado['Grado'];
-
-    echo "<h3>Grado: " . $grado . "</h3>";
-
-    // Obtener los útiles para el grado actual
-    $sqlUtiles = "SELECT ID, Nombre, Descripcion FROM ListaDeUtiles WHERE GradoID = $gradoID";
-    $resultUtiles = $conn->query($sqlUtiles);
-
-    echo "<form action='index.php' method='POST'>";
-    echo "<input type='hidden' name='grado' value='$gradoID'>";
-
-    while ($rowUtil = $resultUtiles->fetch_assoc()) {
-        $utilID = $rowUtil['ID'];
-        $nombre = $rowUtil['Nombre'];
-        $descripcion = $rowUtil['Descripcion'];
-
-        echo "<input type='checkbox' name='utiles[]' value='$utilID'> $nombre - $descripcion<br>";
-        echo "Cantidad: <input type='number' name='cantidad_$utilID' value='1' min='1'><br><br>";
-    }
-
-    echo "<hr>";
-}
-?>
-
-<h2>Registro de Recepción de Materiales:</h2>
-<form action="index.php" method="POST">
-    <label for="nombre_estudiante">Nombre del Estudiante:</label>
-    <input type="text" name="nombre_estudiante" id="nombre_estudiante" required>
-    <br><br>
-    <label for="grado">Grado:</label>
-    <select name="grado" id="grado">
-        <?php
-        $resultGrados->data_seek(0); // Reiniciar el puntero del resultado
-
-        while ($rowGrado = $resultGrados->fetch_assoc()) {
-            echo "<option value='" . $rowGrado['ID'] . "'>" . $rowGrado['Grado'] . "</option>";
-        }
-        ?>
-    </select>
-    <br><br>
-    <input type="submit" value="Registrar Recepción">
-</form>
-
-</div>
 <?php require_once('inc/footer.php'); ?>

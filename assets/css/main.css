@@ -1,9 +1,10 @@
-* {
+
+/** {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
+}*/
 input {
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -20,9 +21,20 @@ h2 {
     text-align: center;
     margin: 2rem;
 }
+.navega {
+    background-color: #ffffffe0;
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+}
 .lista-utiles {
     background-color: #ffffffe0;
 }
+.lista-grados {
+    background-color: #ffffffe0;
+}
+.lista-estudiantes {
+    background-color: #ffffffe0;
+}
+
 .nard {
     font-weight: 900;
     text-decoration: none;
