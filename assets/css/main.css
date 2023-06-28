@@ -19,11 +19,9 @@ body {
 }
 h2 {
     text-align: center;
-    margin: 2rem;
 }
 .navega {
-    background-color: #ffffffe0;
-    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffeb;
 }
 .lista-utiles {
     background-color: #ffffffe0;
@@ -35,7 +33,25 @@ h2 {
     background-color: #ffffffe0;
 }
 
+li.nav-item a {
+    background: #FF4255;
+    color: #fff;
+    margin: 5px;
+    padding: 5px;
+}
+
+li.nav-item a:hover {
+    color: #fff;
+}
 .nard {
     font-weight: 900;
     text-decoration: none;
+}
+
+/* Contenedores */
+
+.container.principal {
+    background: #ffffffeb;
+    padding: 3rem 5rem;
+    margin: 3rem 0rem;
 }

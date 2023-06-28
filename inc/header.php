@@ -32,16 +32,16 @@ require 'config.php';
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>">Principal</a>
+                            <a class="nav-link" href="<?php echo URL; ?>">Recepción</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>estudiantes.php">Estudiantes</a>
+                            <a class="nav-link" href="<?php echo URL; ?>registro_grados.php">Listado de Grados</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo URL; ?>registro_utiles.php">Lista de útiles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>registro_grados.php">Listado de Grados</a>
+                            <a class="nav-link" href="<?php echo URL; ?>estudiantes.php">Estudiantes</a>
                         </li>
                     </ul>
                 </div>
