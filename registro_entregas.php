@@ -2,7 +2,7 @@
 require_once('inc/header.php');
 
 // Obtener los datos de los estudiantes y los útiles entregados
-$sqlEstudiantes = "SELECT E.ID, E.NombreEstudiante, G.Grado, L.Nombre AS Util, L.Cantidad
+$sqlEstudiantes = "SELECT E.ID, E.NombreEstudiante, G.Grado, L.Descripcion AS Util, L.Cantidad
                    FROM estudiantes E
                    LEFT JOIN grados G ON E.GradoID = G.ID
                    LEFT JOIN listadeutiles L ON G.ID = L.GradoID";
@@ -18,13 +18,14 @@ $resultEstudiantes = $conn->query($sqlEstudiantes);
                 <th class="text-center">Nombre del Estudiante</th>
                 <th class="text-center">Grado</th>
                 <th class="text-center">Útiles Entregados</th>
+                <th class="text-center">Útiles Faltantes</th>
                 <th class="text-center">Estado</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            // Recorrer los estudiantes y verificar los útiles entregados
-            $currentStudentID = null;
+            $studentsData = array();
+
             while ($row = $resultEstudiantes->fetch_assoc()) {
                 $estudianteID = $row['ID'];
                 $nombreEstudiante = $row['NombreEstudiante'];
@@ -32,73 +33,51 @@ $resultEstudiantes = $conn->query($sqlEstudiantes);
                 $util = $row['Util'];
                 $cantidad = $row['Cantidad'];
 
-                // Verificar si es el mismo estudiante que el anterior
-                if ($estudianteID === $currentStudentID) {
-                    // Agregar el útil entregado al listado
-                    echo "<li>$util ($cantidad)</li>";
-                } else {
-                    // Es un nuevo estudiante, mostrar los datos
-                    if ($currentStudentID !== null) {
-                        // Cerrar la lista de útiles entregados del estudiante anterior
-                        echo "</ul>";
+                if (!isset($studentsData[$estudianteID])) {
+                    // Inicializar los datos del estudiante
+                    $studentsData[$estudianteID] = array(
+                        'nombre' => $nombreEstudiante,
+                        'grado' => $grado,
+                        'entregados' => array(),
+                        'faltantes' => array(),
+                    );
+                }
 
-                        // Verificar el estado de los útiles entregados
-                        $sqlEstado = "SELECT COUNT(*) AS TotalUtiles
-                                      FROM listadeutiles L
-                                      WHERE L.GradoID = (SELECT GradoID FROM estudiantes WHERE ID = $currentStudentID)";
-                        $resultEstado = $conn->query($sqlEstado);
-                        $rowEstado = $resultEstado->fetch_assoc();
-                        $totalUtiles = $rowEstado['TotalUtiles'];
+                // Obtener la cantidad de útiles entregados para el estudiante actual
+                $sqlEntregados = "SELECT COUNT(*) AS UtilesEntregados
+                                  FROM utilesestudiante UE
+                                  WHERE UE.EstudianteID = $estudianteID
+                                  AND UE.UtilID IN (SELECT ID FROM listadeutiles WHERE Descripcion = '$util')";
+                $resultEntregados = $conn->query($sqlEntregados);
+                $rowEntregados = $resultEntregados->fetch_assoc();
+                $utilesEntregadosCount = $rowEntregados['UtilesEntregados'];
 
-                        $sqlEntregados = "SELECT COUNT(*) AS UtilesEntregados
-                                          FROM utilesestudiante UE
-                                          WHERE UE.EstudianteID = $currentStudentID";
-                        $resultEntregados = $conn->query($sqlEntregados);
-                        $rowEntregados = $resultEntregados->fetch_assoc();
-                        $utilesEntregados = $rowEntregados['UtilesEntregados'];
+                // Calcular la cantidad de útiles faltantes para el estudiante actual
+                $utilesFaltantesCount = $cantidad - $utilesEntregadosCount;
 
-                        $estado = ($utilesEntregados === $totalUtiles) ? "Completo" : "Pendiente";
-                        $estadoColor = ($utilesEntregados === $totalUtiles) ? "text-success" : "text-warning";
+                if ($utilesEntregadosCount > 0) {
+                    $studentsData[$estudianteID]['entregados'][] = "$util ($utilesEntregadosCount)";
+                }
 
-                        echo "<td class='text-center $estadoColor'>$estado</td>";
-                        echo "</tr>";
-                    }
-
-                    $currentStudentID = $estudianteID;
-
-                    // Mostrar los datos del estudiante y los útiles entregados
-                    echo "<tr>";
-                    echo "<td>$nombreEstudiante</td>";
-                    echo "<td>$grado</td>";
-                    echo "<td>";
-                    echo "<ul class='listado'>";  // Iniciar la lista de útiles entregados
-                    echo "<li>$util ($cantidad)</li>";
+                if ($utilesFaltantesCount > 0) {
+                    $studentsData[$estudianteID]['faltantes'][] = "$util ($utilesFaltantesCount)";
                 }
             }
 
-            // Cerrar la lista de útiles entregados del último estudiante y mostrar el estado
-            if ($currentStudentID !== null) {
-                echo "</ul>";
+            // Mostrar los datos de los estudiantes
+            foreach ($studentsData as $student) {
+                $nombreEstudiante = $student['nombre'];
+                $grado = $student['grado'];
+                $utilesEntregados = implode('<br>', $student['entregados']);
+                $utilesFaltantes = implode('<br>', $student['faltantes']);
+                $estado = empty($student['faltantes']) ? '<span class="text-success">Completo</span>' : '<span class="text-warning">Faltantes</span>';
 
-                // Verificar el estado de los útiles entregados
-                $sqlEstado = "SELECT COUNT(*) AS TotalUtiles
-                              FROM listadeutiles L
-                              WHERE L.GradoID = (SELECT GradoID FROM estudiantes WHERE ID = $currentStudentID)";
-                $resultEstado = $conn->query($sqlEstado);
-                $rowEstado = $resultEstado->fetch_assoc();
-                $totalUtiles = $rowEstado['TotalUtiles'];
-
-                $sqlEntregados = "SELECT COUNT(*) AS UtilesEntregados
-                                  FROM utilesestudiante UE
-                                  WHERE UE.EstudianteID = $currentStudentID";
-                $resultEntregados = $conn->query($sqlEntregados);
-                $rowEntregados = $resultEntregados->fetch_assoc();
-                $utilesEntregados = $rowEntregados['UtilesEntregados'];
-
-                $estado = ($utilesEntregados === $totalUtiles) ? "Completo" : "Pendiente";
-                $estadoColor = ($utilesEntregados === $totalUtiles) ? "text-success" : "text-warning";
-
-                echo "<td class='text-center $estadoColor'>$estado</td>";
+                echo "<tr>";
+                echo "<td>$nombreEstudiante</td>";
+                echo "<td>$grado</td>";
+                echo "<td>$utilesEntregados</td>";
+                echo "<td>$utilesFaltantes</td>";
+                echo "<td class='text-center'>$estado</td>";
                 echo "</tr>";
             }
             ?>
