@@ -20,7 +20,7 @@ $resultGrados = $conn->query($sqlGrados);
             </div>
             <div class="col-md-3">
                 <label for="grado" class="form-label">Grado:</label>
-                <select name="grado" id="grado" class="form-select" onchange="fetchUtiles(this.value)" require>
+                <select name="grado" id="grado" class="form-select" onchange="fetchUtiles(this.value)" required>
                     <option value="">Selecciona un grado</option>
                     <?php
                     while ($rowGrado = $resultGrados->fetch_assoc()) {
