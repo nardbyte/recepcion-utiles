@@ -23,7 +23,7 @@ require 'config.php';
     <div class="container main mb-4">
         <nav class="navbar navbar-expand-lg navbar-light navega mb-4">
             <div class="container">
-                <a class="navbar-brand mx-auto" href="<?php echo URL; ?>">
+                <a class="navbar-brand mx-auto" href="<?php echo URL; ?>" draggable="false">
                     <img src="assets/images/logo.svg" alt="<?php echo SITENAME; ?>" width="210px">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,10 +1,10 @@
 
-/** {
+* {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}*/
+}
 input {
     -webkit-user-select: text;
     -moz-user-select: text;
@@ -32,10 +32,6 @@ h2 {
 }
 .lista-estudiantes {
     background-color: #ffffffe0;
-}
-ul.listado {
-    margin: 0;
-    list-style: none;
 }
 li.nav-item a {
     background: #FF4255;

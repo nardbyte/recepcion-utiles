@@ -2,7 +2,7 @@
 require_once('inc/header.php');
 
 // Obtener los datos de los estudiantes y los útiles entregados
-$sqlEstudiantes = "SELECT E.ID, E.NombreEstudiante, G.Grado, L.Descripcion AS Util, L.Cantidad
+$sqlEstudiantes = "SELECT E.ID, E.NombreEstudiante, G.Grado, L.Nombre AS Util, L.Cantidad
                    FROM estudiantes E
                    LEFT JOIN grados G ON E.GradoID = G.ID
                    LEFT JOIN listadeutiles L ON G.ID = L.GradoID";
@@ -31,7 +31,7 @@ $resultEstudiantes = $conn->query($sqlEstudiantes);
                 $nombreEstudiante = $row['NombreEstudiante'];
                 $grado = $row['Grado'];
                 $util = $row['Util'];
-                $cantidad = $row['Cantidad'];
+                $cantidadRequerida = $row['Cantidad'];
 
                 if (!isset($studentsData[$estudianteID])) {
                     // Inicializar los datos del estudiante
@@ -44,16 +44,19 @@ $resultEstudiantes = $conn->query($sqlEstudiantes);
                 }
 
                 // Obtener la cantidad de útiles entregados para el estudiante actual
-                $sqlEntregados = "SELECT COUNT(*) AS UtilesEntregados
+                $sqlEntregados = "SELECT SUM(UE.Cantidad) AS UtilesEntregados
                                   FROM utilesestudiante UE
+                                  INNER JOIN listadeutiles L ON UE.UtilID = L.ID
                                   WHERE UE.EstudianteID = $estudianteID
-                                  AND UE.UtilID IN (SELECT ID FROM listadeutiles WHERE Descripcion = '$util')";
+                                  AND L.Nombre = '$util'
+                                  AND L.GradoID = (SELECT ID FROM grados WHERE Grado = '$grado')";
                 $resultEntregados = $conn->query($sqlEntregados);
                 $rowEntregados = $resultEntregados->fetch_assoc();
                 $utilesEntregadosCount = $rowEntregados['UtilesEntregados'];
 
                 // Calcular la cantidad de útiles faltantes para el estudiante actual
-                $utilesFaltantesCount = $cantidad - $utilesEntregadosCount;
+                $utilesFaltantesCount = $cantidadRequerida - $utilesEntregadosCount;
+                $utilesFaltantesCount = ($utilesFaltantesCount > 0) ? $utilesFaltantesCount : 0;
 
                 if ($utilesEntregadosCount > 0) {
                     $studentsData[$estudianteID]['entregados'][] = "$util ($utilesEntregadosCount)";
@@ -70,13 +73,16 @@ $resultEstudiantes = $conn->query($sqlEstudiantes);
                 $grado = $student['grado'];
                 $utilesEntregados = implode('<br>', $student['entregados']);
                 $utilesFaltantes = implode('<br>', $student['faltantes']);
-                $estado = empty($student['faltantes']) ? '<span class="text-success">Completo</span>' : '<span class="text-warning">Faltantes</span>';
+                $estado = (empty($student['faltantes'])) ? '<span class="text-success">Completo</span>' : '<span class="text-warning">Faltantes</span>';
+
+                // Verificar si no hay útiles faltantes
+                $mensaje = (empty($student['faltantes'])) ? '<span class="text-success">No hay pendientes</span>' : $utilesFaltantes;
 
                 echo "<tr>";
                 echo "<td>$nombreEstudiante</td>";
                 echo "<td>$grado</td>";
                 echo "<td>$utilesEntregados</td>";
-                echo "<td>$utilesFaltantes</td>";
+                echo "<td>$mensaje</td>";
                 echo "<td class='text-center'>$estado</td>";
                 echo "</tr>";
             }
