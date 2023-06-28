@@ -19,6 +19,7 @@ body {
 }
 h2 {
     text-align: center;
+    color: #FF4255;
 }
 .navega {
     background-color: #ffffffeb;
@@ -32,7 +33,10 @@ h2 {
 .lista-estudiantes {
     background-color: #ffffffe0;
 }
-
+ul.listado {
+    margin: 0;
+    list-style: none;
+}
 li.nav-item a {
     background: #FF4255;
     color: #fff;

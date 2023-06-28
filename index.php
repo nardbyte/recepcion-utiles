@@ -31,7 +31,7 @@ $resultGrados = $conn->query($sqlGrados);
             </div>
         </div>
         <div id="utilesContainer"></div>
-        <input type="submit" value="Registrar Recepción" class="btn btn-primary">
+        <input type="submit" value="Registrar Recepción" class="btn btn-success">
     </form>
 </div>
 

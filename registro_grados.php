@@ -47,21 +47,25 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && isset($_GET['gradoID
 }
 ?>
 
-<div class="container mb-4">
-    <h2>Registro de Grados</h2>
-    <form action="registro_grados.php" method="POST" class="row g-3">
-        <div class="row mb-3 justify-content-center align-items-end">
-            <div class="col-md-4">
-                <label for="grado" class="form-label">Grado:</label>
-                <input type="text" name="grado" id="grado" class="form-control" required>
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">Registrar Grado</button>
-            </div>
-        </div>
-    </form>
+<div class="container bg-body p-4 mb-4">
+
+
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <h2>Registro de Grados</h2>
+            <form action="registro_grados.php" method="POST" class="mt-5">
+                <div class="row mb-3 justify-content-center align-items-end">
+                    <div class="col-md-4">
+                        <label for="grado" class="form-label">Grado:</label>
+                        <input type="text" name="grado" id="grado" class="form-control" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success">Registrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
             <h2>Grados Registrados</h2>
             <table class="lista-grados" id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-export="true" data-click-to-select="true" class="table-responsive">
                 <thead>
@@ -85,10 +89,10 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && isset($_GET['gradoID
                             echo "<td>$gradoID</td>";
                             echo "<td>$grado</td>";
                             echo "<td>
-                                    <a href='registro_grados.php?delete=true&gradoID=$gradoID' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de eliminar este grado y los útiles asociados?\")'>
-                                        <i class='bi bi-trash'></i> Eliminar
-                                    </a>
-                                </td>";
+                                <a href='registro_grados.php?delete=true&gradoID=$gradoID' class='btn btn-danger btn-sm' onclick='return confirm(\"¿Estás seguro de eliminar este grado y los útiles asociados?\")'>
+                                    <i class='bi bi-trash'></i> Eliminar
+                                </a>
+                            </td>";
                             echo "</tr>";
                         }
                     } else {

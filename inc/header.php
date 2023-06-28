@@ -41,7 +41,7 @@ require 'config.php';
                             <a class="nav-link" href="<?php echo URL; ?>registro_utiles.php">Lista de útiles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>estudiantes.php">Estudiantes</a>
+                            <a class="nav-link" href="<?php echo URL; ?>registro_entregas.php">Lista de entregas</a>
                         </li>
                     </ul>
                 </div>
