@@ -149,5 +149,4 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && isset($_GET['utilID'
     </table>
 </div>
 
-</div>
 <?php require_once('inc/footer.php'); ?>
