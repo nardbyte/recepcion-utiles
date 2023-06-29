@@ -1,4 +1,4 @@
-<?php if (strpos($_SERVER['PHP_SELF'], 'login.php') === false) { ?>
+<?php if (CURRENT_PAGE !== 'login.php') { ?>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
         <a href="logout.php" class="btn btn-danger">Log out</a>
     </div>

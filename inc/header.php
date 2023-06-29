@@ -2,7 +2,7 @@
 session_start();
 
 // Verificar si el usuario está logeado, excepto en login.php
-if (!isset($_SESSION['loggedin']) && strpos($_SERVER['PHP_SELF'], 'login.php') === false) {
+if (!isset($_SESSION['loggedin']) && CURRENT_PAGE !== 'login.php') {
     header('Location: login.php');
     exit();
 }
@@ -33,7 +33,7 @@ require 'config.php';
                 <a class="navbar-brand mx-auto" href="<?php echo URL; ?>" draggable="false">
                     <img src="assets/images/logo.svg" alt="<?php echo SITENAME; ?>" width="210px">
                 </a>
-                <?php if (strpos($_SERVER['PHP_SELF'], 'login.php') === false) { ?>
+                <?php if (CURRENT_PAGE !== 'login.php') { ?>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
