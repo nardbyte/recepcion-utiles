@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+// Verificar si el usuario está logeado, excepto en login.php
+if (!isset($_SESSION['loggedin']) && strpos($_SERVER['PHP_SELF'], 'login.php') === false) {
+    header('Location: login.php');
+    exit();
+}
 require 'config.php';
 ?>
 <!DOCTYPE html>
@@ -26,24 +33,26 @@ require 'config.php';
                 <a class="navbar-brand mx-auto" href="<?php echo URL; ?>" draggable="false">
                     <img src="assets/images/logo.svg" alt="<?php echo SITENAME; ?>" width="210px">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>">Recepción</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>registro_grados.php">Listado de Grados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>registro_utiles.php">Lista de útiles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="<?php echo URL; ?>registro_entregas.php">Lista de entregas</a>
-                        </li>
-                    </ul>
-                </div>
+                <?php if (strpos($_SERVER['PHP_SELF'], 'login.php') === false) { ?>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo URL; ?>">Recepción</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo URL; ?>registro_grados.php">Listado de Grados</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo URL; ?>registro_utiles.php">Lista de útiles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?php echo URL; ?>registro_entregas.php">Lista de entregas</a>
+                            </li>
+                        </ul>
+                    </div>
+                <?php } ?>
             </div>
         </nav>

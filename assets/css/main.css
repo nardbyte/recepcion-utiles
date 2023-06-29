@@ -50,8 +50,16 @@ li.nav-item a:hover {
 
 /* Contenedores */
 
-.container.principal {
+.principal {
     background: #ffffffeb;
     padding: 3rem 5rem;
     margin: 3rem 0rem;
+}
+.login {
+    margin: 3rem 0rem;
+}
+.bg-login {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
 }

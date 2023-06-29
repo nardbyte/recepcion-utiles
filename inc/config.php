@@ -9,6 +9,7 @@ define("DB_DATABASE", "recepcion-utiles");
 define("SITENAME", "#BSJC");
 define("DESCRIPTION", "Recepción de utiles escolares");
 define("URL", "http://localhost/recepcion-utiles/");
+define("PASS_LOGIN", "contrasena123");
 
 // Conexión a la base de datos
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
