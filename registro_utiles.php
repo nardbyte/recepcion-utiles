@@ -108,7 +108,7 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && isset($_GET['utilID'
 
 <div class="container container bg-body p-4 mb-4">
     <h2>Útiles Registrados</h2>
-    <table class="lista-utiles" id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-export="true" data-click-to-select="true" class="table-responsive">
+    <table class="lista-utiles table-responsive" id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-columns="true" data-show-columns-toggle-all="true" data-show-export="true" data-click-to-select="true" data-minimum-count-columns="2" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, all]" data-side-pagination="client">
         <thead>
             <tr>
                 <th class='text-center' data-field="grado" data-filter-control="input" data-sortable="true">Grado</th>
