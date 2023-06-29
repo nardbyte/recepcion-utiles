@@ -12,14 +12,14 @@ $resultEstudiantes = $conn->query($sqlEstudiantes);
 
 <div class="container bg-body p-4 mb-4">
     <h2>Lista de entregas por estudiante</h2>
-    <table class="lista-estudiantes table-responsive" id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-export="true" data-click-to-select="true">
+    <table class="lista-estudiantes table-responsive" id="table" data-toggle="table" data-search="true" data-filter-control="true" data-show-columns="true" data-show-columns-toggle-all="true" data-show-export="true" data-click-to-select="true" data-minimum-count-columns="2" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, all]" data-side-pagination="client">
         <thead>
             <tr>
-                <th class="text-center">Nombre del Estudiante</th>
-                <th class="text-center">Grado</th>
-                <th class="text-center">Útiles Entregados</th>
-                <th class="text-center">Útiles Faltantes</th>
-                <th class="text-center">Estado</th>
+                <th class="text-center" data-field="estudiante" data-filter-control="input" data-sortable="true">Estudiante</th>
+                <th class="text-center" data-field="grado" data-filter-control="input" data-sortable="true">Grado</th>
+                <th class="text-center" data-field="entregados" data-filter-control="input" data-sortable="true">Útiles Entregados</th>
+                <th class="text-center" data-field="faltantes" data-filter-control="input" data-sortable="true">Útiles Faltantes</th>
+                <th class="text-center" data-field="estado" data-filter-control="input" data-sortable="true">Estado</th>
             </tr>
         </thead>
         <tbody>
