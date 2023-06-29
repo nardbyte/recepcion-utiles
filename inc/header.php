@@ -1,12 +1,12 @@
 <?php
 session_start();
-
+require 'config.php';
 // Verificar si el usuario está logeado, excepto en login.php
 if (!isset($_SESSION['loggedin']) && CURRENT_PAGE !== 'login.php') {
     header('Location: login.php');
     exit();
 }
-require 'config.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
