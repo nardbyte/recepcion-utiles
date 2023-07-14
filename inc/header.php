@@ -21,6 +21,7 @@ if (!isset($_SESSION['loggedin']) && CURRENT_PAGE !== 'login.php') {
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.22.0/dist/extensions/export/bootstrap-table-export.min.js"></script>
 </head>
 
 <body>
